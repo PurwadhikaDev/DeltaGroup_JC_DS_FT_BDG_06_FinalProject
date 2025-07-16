@@ -103,6 +103,65 @@ Melalui model ini, kami bertujuan untuk memberikan dukungan berbasis data guna m
 
 Dengan pendekatan analitik yang tepat, diharapkan tim manajemen dapat mengambil keputusan yang lebih akurat dan strategis dalam menjalankan program pemasaran berikutnya.
 
+# **Data Understanding**
+
+**Tabel Atribut Dataset Kampanye Pemasaran Bank**
+
+| No. | Nama Atribut     | Kelompok Atribut         | Tipe Data   | Kategori / Deskripsi Singkat                              |
+| --- | ---------------- | ------------------------ | ----------- | --------------------------------------------------------- |
+| 1   | `age`            | Data Klien               | Numerik     | Usia klien dalam tahun                                    |
+| 2   | `job`            | Data Klien               | Kategorikal | Jenis pekerjaan (admin., technician, student, dll.)       |
+| 3   | `marital`        | Data Klien               | Kategorikal | Status pernikahan (married, single, divorced, unknown)    |
+| 4   | `education`      | Data Klien               | Kategorikal | Tingkat pendidikan (basic.9y, university.degree, dll.)    |
+| 5   | `default`        | Data Klien               | Kategorikal | Kredit macet: yes, no, unknown                            |
+| 6   | `housing`        | Data Klien               | Kategorikal | Pinjaman perumahan: yes, no, unknown                      |
+| 7   | `loan`           | Data Klien               | Kategorikal | Pinjaman pribadi: yes, no, unknown                        |
+| 8   | `contact`        | Data Kontak Terakhir     | Kategorikal | Media kontak (cellular, telephone)                        |
+| 9   | `month`          | Data Kontak Terakhir     | Kategorikal | Bulan kontak terakhir (jan, feb, ..., dec)                |
+| 10  | `day_of_week`    | Data Kontak Terakhir     | Kategorikal | Hari kontak terakhir (mon, tue, ..., fri)                 |
+| 11  | `duration`       | Data Kontak Terakhir     | Numerik     | Durasi kontak terakhir (detik)                            |
+| 12  | `campaign`       | Atribut Lain             | Numerik     | Jumlah kontak selama kampanye saat ini                    |
+| 13  | `pdays`          | Atribut Lain             | Numerik     | Hari sejak kontak terakhir (999 = belum pernah dihubungi) |
+| 14  | `previous`       | Atribut Lain             | Numerik     | Jumlah kontak sebelum kampanye saat ini                   |
+| 15  | `poutcome`       | Atribut Lain             | Kategorikal | Hasil kampanye sebelumnya (success, failure, nonexistent) |
+| 16  | `emp.var.rate`   | Konteks Sosial & Ekonomi | Numerik     | Tingkat variasi pekerjaan (indikator kuartalan)           |
+| 17  | `cons.price.idx` | Konteks Sosial & Ekonomi | Numerik     | Indeks harga konsumen (bulanan)                           |
+| 18  | `cons.conf.idx`  | Konteks Sosial & Ekonomi | Numerik     | Indeks kepercayaan konsumen                               |
+| 19  | `euribor3m`      | Konteks Sosial & Ekonomi | Numerik     | Suku bunga Euribor 3 bulan                                |
+| 20  | `nr.employed`    | Konteks Sosial & Ekonomi | Numerik     | Jumlah karyawan (indikator kuartalan)                     |
+| 21  | `y`              | Variabel Target          | Biner       | Apakah klien berlangganan deposito berjangka: yes atau no |
+
+## **Data Preparation**
+### **Data Cleaning**
+Beberapa proses pembersihan data yang dilakukan dalam tahap ini meliputi:
+
+- Menghapus duplikasi data untuk memastikan integritas dataset.
+
+- Menangani nilai-nilai yang tidak valid atau ambigu, seperti:
+
+  Nilai 999 pada fitur pdays, yang menandakan bahwa pelanggan belum pernah dihubungi sebelumnya.
+
+- Pemeriksaan nilai ekstrem (outliers) dan penanganannya melalui visualisasi distribusi.
+
+- Memeriksa nilai kosong dan jumlah kategori (cardinality) untuk setiap fitur.
+
+- Pengelompokan kembali (regrouping) pada beberapa fitur kategorikal agar lebih bermakna secara analitik.
+
+- Penerapan binning pada variabel numerik menggunakan metode KBinsDiscretizer dengan strategi quintile, guna mengurangi noise dan memperjelas pola data.
+
+### **Feature Engineering**
+Tahapan ini bertujuan untuk meningkatkan kualitas fitur yang digunakan dalam pemodelan, melalui:
+
+- Ekstraksi fitur baru, seperti status pinjaman yang digabungkan dari variabel housing dan loan.
+
+- Seleksi fitur menggunakan pendekatan Power Predictive Score (PPS), untuk mengidentifikasi fitur yang paling relevan terhadap variabel target (y).
+
+- Transformasi fitur, meliputi:
+
+  - Encoding kategorikal: termasuk teknik custom encoding, binary encoding, one-hot encoding, dan label encoding sesuai kebutuhan masing-masing fitur.
+
+  - Scaling fitur numerik menggunakan Robust Scaler, yang lebih tahan terhadap outlier dibandingkan scaler konvensional.
+
 ## **Sumber Referensi**
 
 - Ruler Analytics (2023). What Is a Good Conversion Rate for Financial Services? https://www.ruleranalytics.com
@@ -126,3 +185,5 @@ Dengan pendekatan analitik yang tepat, diharapkan tim manajemen dapat mengambil 
 - Baesens, B. (2014). Analytics in a Big Data World: The Essential Guide to Data Science and its Applications. Hoboken: Wiley.
 
 - UCI Machine Learning Repository. (2024). Bank Marketing Dataset. Retrieved from https://archive.ics.uci.edu/ml/datasets/bank+marketing
+
+
