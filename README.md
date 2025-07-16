@@ -158,7 +158,7 @@ Tahapan ini bertujuan untuk meningkatkan kualitas fitur yang digunakan dalam pem
 
 - Transformasi fitur, meliputi:
 
-  - Encoding kategorikal: termasuk teknik custom encoding, binary encoding, one-hot encoding, dan label encoding sesuai kebutuhan masing-masing fitur.
+  - Encoding kategorikal: termasuk teknik custom encoding, binary encoding,ordinal encoding, one-hot encoding, dan label encoding sesuai kebutuhan masing-masing fitur.
 
   - Scaling fitur numerik menggunakan Robust Scaler, yang lebih tahan terhadap outlier dibandingkan scaler konvensional.
 
