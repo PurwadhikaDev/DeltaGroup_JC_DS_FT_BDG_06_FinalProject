@@ -137,30 +137,92 @@ Beberapa proses pembersihan data yang dilakukan dalam tahap ini meliputi:
 
 - Menghapus duplikasi data untuk memastikan integritas dataset.
 
-- Menangani nilai-nilai yang tidak valid atau ambigu, seperti:
-
-  Nilai 999 pada fitur pdays, yang menandakan bahwa pelanggan belum pernah dihubungi sebelumnya.
-
 - Pemeriksaan nilai ekstrem (outliers) dan penanganannya melalui visualisasi distribusi.
 
-- Memeriksa nilai kosong dan jumlah kategori (cardinality) untuk setiap fitur.
-
-- Pengelompokan kembali (regrouping) pada beberapa fitur kategorikal agar lebih bermakna secara analitik.
-
-- Penerapan binning pada variabel numerik menggunakan metode KBinsDiscretizer dengan strategi quintile, guna mengurangi noise dan memperjelas pola data.
+- Memeriksa nilai kosong untuk setiap fitur.
 
 ### **Feature Engineering**
 Tahapan ini bertujuan untuk meningkatkan kualitas fitur yang digunakan dalam pemodelan, melalui:
 
-- Ekstraksi fitur baru, seperti status pinjaman yang digabungkan dari variabel housing dan loan.
-
-- Seleksi fitur menggunakan pendekatan Power Predictive Score (PPS), untuk mengidentifikasi fitur yang paling relevan terhadap variabel target (y).
-
 - Transformasi fitur, meliputi:
 
-  - Encoding kategorikal: termasuk teknik custom encoding, binary encoding,ordinal encoding, one-hot encoding, dan label encoding sesuai kebutuhan masing-masing fitur.
+  - Encoding kategorikal: termasuk teknik binary encoding, ordinal encoding, dan one-hot encoding sesuai kebutuhan masing-masing fitur.
 
   - Scaling fitur numerik menggunakan Robust Scaler, yang lebih tahan terhadap outlier dibandingkan scaler konvensional.
+ 
+## **Modelling dan Evaluasi**
+Pada tahap ini, dilakukan pemodelan prediktif untuk mengklasifikasikan apakah seorang pelanggan akan tertarik terhadap penawaran deposito berjangka berdasarkan data historis kampanye telemarketing.
+
+### **Cross Validation and Check Perfomance to Data Test**
+Proses ini bertujuan untuk mengevaluasi performa model menggunakan teknik cross-validation pada data pelatihan, sekaligus mengukur kinerja akhir model terhadap data pengujian yang belum pernah dilihat sebelumnya. Cross-validation memberikan estimasi performa yang lebih andal dengan membagi data pelatihan ke dalam beberapa fold, sementara evaluasi pada data uji digunakan untuk mengukur generalisasi model secara nyata. Metrik yang digunakan antara lain precision serta metrik bisnis seperti CVR dan ROMI.
+
+Beberapa algoritma klasifikasi disiapkan untuk dievaluasi dan dibandingkan performanya, meliputi model linear dan model berbasis pohon keputusan. Setiap model diinisialisasi dengan parameter default, dan random_state disetel untuk memastikan reprodusibilitas hasil. Model yang digunakan antara lain:
+
+**Logistic Regression :** Dipilih sebagai baseline model karena interpretabilitasnya tinggi dan cepat dilatih. Cocok untuk mengetahui pengaruh fitur secara linier terhadap probabilitas deposit.
+
+**K-Nearest Neighbors :** Dipertimbangkan untuk mengevaluasi pendekatan berbasis kemiripan antara pelanggan. Meskipun kurang efisien pada data besar, KNN berguna sebagai pembanding non-parametrik
+
+**Decision Tree :** Model yang mudah dijelaskan dan menangani fitur kategorikal tanpa perlu banyak preprocessing. Berguna untuk mengeksplorasi hubungan non-linear secara eksplisit.
+
+**Random Forest :** Ensambel tree yang meningkatkan akurasi dan ketahanan terhadap overfitting dibanding single tree. Dapat menangani hubungan kompleks antar fitur dengan baik.
+
+**XGBoost :** Dipilih karena performanya yang unggul dalam berbagai kompetisi dan kasus nyata. Mampu menangani ketidakseimbangan kelas, serta sering menghasilkan precision dan CVR yang tinggi,
+
+Model-model ini akan digunakan dalam proses cross-validation untuk menentukan kandidat terbaik sebelum dilakukan hyperparameter tuning lebih lanjut.
+
+Berdasarkan hasil Cross Validation model XGBoost tanpa sampling dipilih karena memberikan **precision tertinggi (63.61%)** dengan **CVR (53.02%)** dan **ROMI (1052.64%)** yang juga paling tinggi, menunjukkan bahwa model ini mampu menargetkan calon depositor secara akurat sekaligus memberikan dampak bisnis yang optimal.
+
+### **Hyperparameter Tuning**
+Proses ini bertujuan untuk mengoptimalkan kinerja model dengan mencari kombinasi hyperparameter terbaik menggunakan **GridSearchCV**. Dengan melakukan pencarian grid terhadap berbagai nilai seperti jumlah estimators, kedalaman pohon, learning rate, dan parameter subsampling (khusus untuk XGBoost), model dapat disesuaikan agar menghasilkan performa terbaik khususnya dalam hal precision, sesuai dengan fokus bisnis untuk meminimalkan false positive dan meningkatkan efisiensi pemasaran. Evaluasi dilakukan menggunakan teknik stratified cross-validation untuk menjaga proporsi kelas pada setiap fold.
+
+Berikut hasil before after Hyperparameter Tuning XGBoost
+
+| Model          | Precision |   CVR   | ROMI  |
+|----------------|-----------|---------|-------|
+| Before Tuning  | 0.61      | 61.35   | 1233  |
+| After Tuning   | 0.80      | 80.17   | 1642  |
+
+### **Threshold Tuning**
+Setelah model terbaik ditemukan melalui hyperparameter tuning, dilakukan proses lanjutan dengan threshold tuning untuk mengatur ambang batas probabilitas dalam klasifikasi, dengan tujuan memaksimalkan precision sesuai prioritas bisnis. Proses ini mengevaluasi performa model pada berbagai nilai threshold dan menghitung metrik seperti Precision, Recall, F1 Score, CVR, dan ROMI. Hasilnya menunjukkan bahwa menaikkan threshold ke 0.55 menghasilkan precision tertinggi (92.59%) dan secara signifikan meningkatkan efektivitas kampanye secara bisnis, terbukti dari nilai CVR dan ROMI yang juga meningkat tajam.
+
+### **Business Simulation**
+
+| Strategi                          | CVR    | ROMI     | Pelanggan Dihubungi |
+| ----------------------------------| ------ | -------- | ------------------- |
+| Tanpa Modeling                    | 12.65% | 175.16%  | 30,488              |
+| Dengan Modeling (XGB)             | 80.17% | 1,743.5% | 97                  |
+| Dengan Modeling (XGB) + Threshold | 92.59% | 1,913.0% | 27                  |
+
+Setelah dilakukan perbandingan antara skenario tanpa modeling dan dengan modeling menggunakan algoritma XGBoost dengan threshold tuning, diperoleh hasil sebagai berikut:
+
+- **Conversion Rate (CVR)** meningkat dari 12.65% (tanpa model) menjadi 92.59% (dengan model).
+Artinya, tingkat keberhasilan dalam mengonversi prospek menjadi pelanggan meningkat lebih dari 7 kali lipat.
+- **Return on Marketing Investment (ROMI)** meningkat dari 175.16% menjadi 1,913.0%.
+Ini menunjukkan bahwa efektivitas biaya pemasaran meningkat hampir 11 kali lipat.
+
+Dengan menggunakan model prediktif, perusahaan dapat menargetkan pelanggan yang lebih tepat, sehingga mengurangi pemborosan biaya panggilan dan secara signifikan meningkatkan keuntungan dari setiap investasi pemasaran yang dilakukan.
+
+## **Kesimpulan dan Rekomendasi**
+**Kesimpulan**
+
+Evaluasi terhadap data uji menunjukkan bahwa model ini:
+
+- Mampu mencapai precision yang sangat tinggi (92.59%), artinya hampir seluruh pelanggan yang diprediksi akan melakukan deposit benar-benar melakukannya.
+- Hanya perlu menghubungi 27 pelanggan saja, dibandingkan 30,488 jika tanpa model efisiensi yang sangat signifikan.
+- Menghasilkan Conversion Rate (CVR) sebesar 92.59%, meningkat lebih dari 7 kali lipat dibandingkan tanpa model.
+- Meningkatkan Return on Marketing Investment (ROMI) menjadi 1,913%, atau hampir 11 kali lipat lebih besar dari strategi pemasaran konvensional.
+
+**Rekomendasi untuk Manajemen Pemasaran**
+1. Prioritaskan Pelanggan Berdasarkan Prediksi Model
+2. Terapkan Threshold Probabilitas Tinggi dalam Eksekusi Campaign
+3. Realokasi Anggaran Marketing Secara Lebih Efisien
+4. Integrasikan Output Model dengan Tim Telemarketing
+
+**Rekomendasi Strategis untuk Keberlanjutan Model & Pemanfaatannya**
+1. Perbarui Model Secara Berkala Berdasarkan Data Terbaru
+2. Perkaya Data Input dengan Sumber Informasi Tambahan
+3. Kembangkan Dashboard Monitoring Model untuk Tim Marketing
+4. Pantau Perubahan Pola Data (Data Drift)
 
 ## **Sumber Referensi**
 
