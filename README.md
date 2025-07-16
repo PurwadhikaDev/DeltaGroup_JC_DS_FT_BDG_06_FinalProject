@@ -233,6 +233,18 @@ https://public.tableau.com/app/profile/muhamad.kahfi/viz/BANKADDITIONAL/Dashboar
 
 https://nh2azfhwx3tvzpd62gmakc.streamlit.app/
 
+**Halaman Utama Streamlit**
+
+![alt text](https://github.com/PurwadhikaDev/DeltaGroup_JC_DS_FT_BDG_06_FinalProject/blob/main/Asset/Halaman_Utama_Streamlit.png?raw=true)
+
+**Tab Input Manual**
+
+![alt text](https://github.com/PurwadhikaDev/DeltaGroup_JC_DS_FT_BDG_06_FinalProject/blob/main/Asset/Tab_Input_Manual.png?raw=true)
+
+**Tab Input File CSV**
+
+![alt text](https://github.com/PurwadhikaDev/DeltaGroup_JC_DS_FT_BDG_06_FinalProject/blob/main/Asset/Tab_Input_File.png?raw=true)
+
 ## **Sumber Referensi**
 
 - Ruler Analytics (2023). What Is a Good Conversion Rate for Financial Services? https://www.ruleranalytics.com
