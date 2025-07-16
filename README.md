@@ -229,6 +229,10 @@ https://public.tableau.com/app/profile/muhamad.kahfi/viz/BANKADDITIONAL/Dashboar
 
 ## **Sumber Referensi**
 
+## **Streamlit**
+
+https://nh2azfhwx3tvzpd62gmakc.streamlit.app/
+
 - Ruler Analytics (2023). What Is a Good Conversion Rate for Financial Services? https://www.ruleranalytics.com
 
 - Chaffey, D. (2019). Digital Marketing: Strategy, Implementation and Practice. Pearson Education.
@@ -250,7 +254,3 @@ https://public.tableau.com/app/profile/muhamad.kahfi/viz/BANKADDITIONAL/Dashboar
 - Baesens, B. (2014). Analytics in a Big Data World: The Essential Guide to Data Science and its Applications. Hoboken: Wiley.
 
 - UCI Machine Learning Repository. (2024). Bank Marketing Dataset. Retrieved from https://archive.ics.uci.edu/ml/datasets/bank+marketing
-
-# **Streamlit**
-
-https://nh2azfhwx3tvzpd62gmakc.streamlit.app/
