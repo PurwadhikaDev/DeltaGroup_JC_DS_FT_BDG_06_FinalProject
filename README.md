@@ -227,6 +227,8 @@ Evaluasi terhadap data uji menunjukkan bahwa model ini:
 ## **Tableau**
 https://public.tableau.com/app/profile/muhamad.kahfi/viz/BANKADDITIONAL/Dashboard3
 
+![alt text](https://github.com/PurwadhikaDev/DeltaGroup_JC_DS_FT_BDG_06_FinalProject/blob/main/Asset/Screenshot%202025-07-16%20at%2022.12.47.png?raw=true)
+
 ## **Sumber Referensi**
 
 ## **Streamlit**
