@@ -153,7 +153,7 @@ Tahapan ini bertujuan untuk meningkatkan kualitas fitur yang digunakan dalam pem
 ## **Modelling dan Evaluasi**
 Pada tahap ini, dilakukan pemodelan prediktif untuk mengklasifikasikan apakah seorang pelanggan akan tertarik terhadap penawaran deposito berjangka berdasarkan data historis kampanye telemarketing.
 
-### **Cross Validation and Check Perfomance to Data Test**
+### **Cross Validation dan Check Perfomance to Data Test**
 Proses ini bertujuan untuk mengevaluasi performa model menggunakan teknik cross-validation pada data pelatihan, sekaligus mengukur kinerja akhir model terhadap data pengujian yang belum pernah dilihat sebelumnya. Cross-validation memberikan estimasi performa yang lebih andal dengan membagi data pelatihan ke dalam beberapa fold, sementara evaluasi pada data uji digunakan untuk mengukur generalisasi model secara nyata. Metrik yang digunakan antara lain precision serta metrik bisnis seperti CVR dan ROMI.
 
 Beberapa algoritma klasifikasi disiapkan untuk dievaluasi dan dibandingkan performanya, meliputi model linear dan model berbasis pohon keputusan. Setiap model diinisialisasi dengan parameter default, dan random_state disetel untuk memastikan reprodusibilitas hasil. Model yang digunakan antara lain:
