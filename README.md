@@ -248,4 +248,6 @@ Evaluasi terhadap data uji menunjukkan bahwa model ini:
 
 - UCI Machine Learning Repository. (2024). Bank Marketing Dataset. Retrieved from https://archive.ics.uci.edu/ml/datasets/bank+marketing
 
+# **Streamlit**
 
+https://nh2azfhwx3tvzpd62gmakc.streamlit.app/
