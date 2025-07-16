@@ -224,6 +224,9 @@ Evaluasi terhadap data uji menunjukkan bahwa model ini:
 3. Kembangkan Dashboard Monitoring Model untuk Tim Marketing
 4. Pantau Perubahan Pola Data (Data Drift)
 
+## **Tableau**
+https://public.tableau.com/app/profile/muhamad.kahfi/viz/BANKADDITIONAL/Dashboard3
+
 ## **Sumber Referensi**
 
 - Ruler Analytics (2023). What Is a Good Conversion Rate for Financial Services? https://www.ruleranalytics.com
