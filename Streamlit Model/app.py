@@ -8,15 +8,15 @@ st.set_page_config(page_title="Prediksi Nasabah Bank", layout="centered")
 # --- CACHE ---
 @st.cache_data
 def load_data():
-    return pd.read_csv(r"D:\\Purwadhika\\Finpro\\Streamlit Model\\Data\\bank-additional-full_cleaned.csv")
+    return pd.read_csv("bank-additional-full_cleaned.csv")
 
 @st.cache_resource
 def load_model():
-    return joblib.load(r"D:\\Purwadhika\\Finpro\\Streamlit Model\\best_xgb_model.pkl", 'rb')
+    return joblib.load("best_xgb_model.pkl", 'rb')
 
 @st.cache_resource
 def load_threshold():
-    return joblib.load(r"D:\\Purwadhika\\Finpro\\Streamlit Model\\best_threshold.pkl", 'rb')
+    return joblib.load("best_threshold.pkl", 'rb')
 
 data_ref = load_data()
 model = load_model()
