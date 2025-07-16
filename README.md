@@ -1,1 +1,1 @@
-# DeltaGroup_JC_DS_FT_BDG_06_FinalProject
+# Optimalisasi Strategi Telemarketing Produk Deposito Berjangka melalui Model Prediktif Berbasis Data
